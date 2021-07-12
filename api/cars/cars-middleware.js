@@ -1,7 +1,8 @@
-const cars = require('./cars-model')
+const cars = require('./cars-model');
+const vinValidator = require('vin-validator');
 
 const checkCarId = (req, res, next) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   cars.getById(id)
     .then((resp) => {
@@ -14,15 +15,43 @@ const checkCarId = (req, res, next) => {
 }
 
 const checkCarPayload = (req, res, next) => {
-  // DO YOUR MAGIC
+  const testCar = req.body;
+
+  if (!testCar.vin) {
+    res.status(400).json({ message: "vin is missing" });
+  } else if (typeof(testCar.vin) !== "string") {
+    res.status(400).json({ message: "vin is not a string" });
+  } else if (!testCar.make) {
+    res.status(400).json({ message: "make of car is missing" });
+  } else if (!testCar.model) {
+    res.status(400).json({ message: "model of car is missing" });
+  } else if (!testCar.mileage) {
+    res.status(400).json({ message: "mileage of car is missing" });
+  }
+
+  next();
 }
 
 const checkVinNumberValid = (req, res, next) => {
-  // DO YOUR MAGIC
+  const { vin } = req.body;
+
+  if (!vinValidator.validate(vin) ) {
+    res.status(400).json({ message: "vin <vin number> is invalid" });
+  }
+  next();
 }
 
 const checkVinNumberUnique = (req, res, next) => {
-  // DO YOUR MAGIC
+  const { vin } = req.body;
+
+  cars.getByVin(vin)
+    .then((resp) => {
+      if (!resp || resp === undefined || resp === null || resp === []) {
+        next();
+      } else {
+        res.status(400).json({ message: "vin <vin number> already exists" })
+      }
+    }).catch(next);
 }
 
 module.exports = {

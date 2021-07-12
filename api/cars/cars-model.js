@@ -10,7 +10,20 @@ const getById = (id) => {
     .first();
 }
 
+const getByVin = (vin) => {
+  db('cars')
+    .where( { vin })
+    .first();
+}
+
 const create = (neoCar) => {
   db('cars')
     .insert(neoCar);
+}
+
+module.exports = {
+  getAll,
+  getById,
+  getByVin,
+  create
 }
