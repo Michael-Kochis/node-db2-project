@@ -1,11 +1,16 @@
+const db = require('../../data/db-config');
+
 const getAll = () => {
-  // DO YOUR MAGIC
+  db('cars');
 }
 
-const getById = () => {
-  // DO YOUR MAGIC
+const getById = (id) => {
+  db('cars')
+    .where( { id })
+    .first();
 }
 
-const create = () => {
-  // DO YOUR MAGIC
+const create = (neoCar) => {
+  db('cars')
+    .insert(neoCar);
 }
