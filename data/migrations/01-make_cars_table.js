@@ -2,6 +2,7 @@ exports.up = function (knex) {
   return knex.schema.createTable('cars', table => {
     table.bigInteger('id').unsigned().notNullable();
     table.text('vin', 64).notNullable().index();
+    table.text('color', 32).notNullable();
     table.text('make', 64).notNullable();
     table.text('model', 64).notNullable();
     table.bigInteger('mileage').unsigned().notNullable();
