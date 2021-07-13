@@ -11,7 +11,7 @@ server.use(cors() );
 
 server.use("/api/cars", carsRouter);
 
-server.use((req, res) => {
+server.use("*", (req, res) => {
     res.status(404).json({
         message: "That endpoint does not exist."
     })

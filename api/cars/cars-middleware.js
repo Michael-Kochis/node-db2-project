@@ -27,9 +27,9 @@ const checkCarPayload = (req, res, next) => {
     res.status(400).json({ message: "model of car is missing" });
   } else if (!testCar.mileage) {
     res.status(400).json({ message: "mileage of car is missing" });
+  } else {
+    next();
   }
-
-  next();
 }
 
 const checkVinNumberValid = (req, res, next) => {
@@ -37,8 +37,9 @@ const checkVinNumberValid = (req, res, next) => {
 
   if (!vinValidator.validate(vin) ) {
     res.status(400).json({ message: "vin <vin number> is invalid" });
+  } else {
+    next();
   }
-  next();
 }
 
 const checkVinNumberUnique = (req, res, next) => {

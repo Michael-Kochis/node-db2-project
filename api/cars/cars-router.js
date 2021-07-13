@@ -32,14 +32,14 @@ router.post("/", [checkCarPayload, checkVinNumberValid, checkVinNumberUnique], (
 router.use((err, req, res, next) => {
     const status = err.status || 500;
 
-    if (!err) {
-        next();
-    }
-
     res.status(status).json({
         message: "Error in car router",
         err: err.message
     });
+
+    if (err.message === 0) {
+        next();
+    }
 })
 
 module.exports = router;
