@@ -25,7 +25,10 @@ router.post("/", [checkCarPayload, checkVinNumberValid, checkVinNumberUnique], (
 
     cars.create(neoCar)
         .then((resp) => {
-            res.status(201).json(resp);
+            cars.getById(resp)
+                .then(r2 => {
+                    res.status(201).json(r2);
+                }).catch(next);
         }).catch(next);
 })
 

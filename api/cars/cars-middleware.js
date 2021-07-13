@@ -22,11 +22,11 @@ const checkCarPayload = (req, res, next) => {
   } else if (typeof(testCar.vin) !== "string") {
     res.status(400).json({ message: "vin is not a string" });
   } else if (!testCar.make) {
-    res.status(400).json({ message: "make of car is missing" });
+    res.status(400).json({ message: "make is missing" });
   } else if (!testCar.model) {
-    res.status(400).json({ message: "model of car is missing" });
+    res.status(400).json({ message: "model is missing" });
   } else if (!testCar.mileage) {
-    res.status(400).json({ message: "mileage of car is missing" });
+    res.status(400).json({ message: "mileage is missing" });
   } else {
     next();
   }
@@ -50,7 +50,7 @@ const checkVinNumberUnique = (req, res, next) => {
       if (!resp || resp === undefined || resp === null || resp === []) {
         next();
       } else {
-        res.status(400).json({ message: "vin <vin number> already exists" })
+        res.status(400).json({ message: `vin ${vin} already exists` })
       }
     }).catch(next);
 }

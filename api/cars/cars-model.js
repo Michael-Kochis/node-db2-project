@@ -18,7 +18,7 @@ const getByVin = async (vin) => {
 
 const create = async (neoCar) => {
   neoCar.id = Date.now();
-
+  
   return await db('cars')
     .insert(neoCar);
 }
